@@ -1,0 +1,81 @@
+<div>
+	<div ng-include="'menu.html'"></div>
+	<snap-dragger></snap-dragger>
+	<snap-content snap-opt-tap-to-close="false">
+
+		<a href="" snap-toggle="left" ng-click="menuOpen = !menuOpen">
+			<span class="menutoggle">
+				<i ng-hide="menuOpen" class="fa fa-bars fa-2x" ></i>
+				<i ng-show="menuOpen" class="fa fa-times fa-2x" ></i>
+			</span>
+		</a>
+		
+		<div class="fr">
+		<h2><small>WELCOME {{user.name}}!</small></h2>
+		<h1 class="commonheading">ISM Saving Group</h1>
+		</div>
+		<div class="text-center">
+			<div class="totalamount">
+				<span>Current Outstanding:</span>
+				<i class="fa fa-rupee"></i> {{overview.balance}}	
+			</div>
+		</div>
+		<div class="jumbotron">
+			<div class="text-center">
+				<div ng-show="user.isAdmin">Show Full report <input type="checkbox" ng-model="pageInfo.show_full_report"></div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 text-center overview-tiles">
+						<div class="table-responsive">
+							<table class="table" ng-init="pageInfo.ovt = {a: 0, b: 0, c: 0};">
+								<tr>
+									<th>#</th>
+									<th>Date</th>
+									<th>Particulars</th>
+									<th>Type</th>
+									<th>Amount</th>
+									<th ng-show="user.isAdmin">Edit</th>
+									<th ng-if="pageInfo.show_full_report">Total Savings(A)</th>
+									<th ng-if="pageInfo.show_full_report">Total Interest(B)</th>
+									<th>Out. Balance<span ng-if="pageInfo.show_full_report">(C)</span></th>
+									<th ng-if="pageInfo.show_full_report">Out. Loan Amt(D)</th>
+									<th ng-if="pageInfo.show_full_report">A+B</th>
+									<th ng-if="pageInfo.show_full_report">C+D</th>
+									<th ng-if="pageInfo.show_full_report">A+B=C+D</th>
+								</tr>
+								<tr ng-repeat="(k,tr) in transactions" ng-init="statement_calc(tr);">
+									<td>{{$index + 1}}</td>
+									<td ng-show="!tr.edit">{{tr.ts | date: 'dd-MM-yyyy'}}</td>
+									<td ng-show="tr.edit"><input ng-model="tr.dt"></td>
+									<td ng-show="!tr.edit"><span ng-if="tr.user != -1">{{userObj[tr.user].name}} </span>
+										<span ng-if="tr.notes && tr.action != 'payloan' && tr.action != 'loan'"> - {{tr.notes}}</span>
+										<span ng-if="tr.notes && (tr.action == 'payloan' || tr.action == 'loan')"> - <a style="color: inherit;" ui-sref="viewloan({id:tr.ref})">{{tr.notes}}</a></span>
+									</td>
+									<td ng-if="tr.edit">
+										<select required class="input-lg" ng-model="tr.user">
+											<option value="">Select</option>
+											<option ng-repeat="us in users" value="{{us.id}}">{{us.name}}-{{us.phone}}-{{us.id}}</option>
+										</select>
+										<input type="text" ng-model="tr.notes" name="">
+									</td>
+									<td>{{tr.action}}</td>
+									<td class="{{tr.type}}"><span ng-if="tr.type == 'debit'">-</span>{{tr.amount}}</td>
+									<td ng-show="user.isAdmin && !tr.edit" ng-click="tr.edit=true;"><i class="fa fa-pencil"></i></td>
+									<td ng-show="user.isAdmin && tr.edit" ng-click="saveData(tr, k);"><i class="fa fa-save"></i></td>
+									<td ng-if="pageInfo.show_full_report">{{tr.balancea}}</td>
+									<td ng-if="pageInfo.show_full_report">{{tr.balanceb}}</td>
+									<td>{{tr.balance}}</td>
+									<td ng-if="pageInfo.show_full_report">{{tr.balancec}}</td>
+									<td ng-if="pageInfo.show_full_report">{{tr.balancea + tr.balanceb}}</td>
+									<td ng-if="pageInfo.show_full_report">{{tr.balance + tr.balancec}}</td>
+									<td ng-if="pageInfo.show_full_report" style="color:{{(tr.balancea + tr.balanceb) == (tr.balance + tr.balancec) ? 'green' : 'red'}}">{{(tr.balancea + tr.balanceb) == (tr.balance + tr.balancec)}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</snap-content>	
+</div>
