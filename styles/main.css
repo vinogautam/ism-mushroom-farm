@@ -2112,3 +2112,34 @@ html,body{overflow:hidden}
     background:#fff;
     color:#666;
 }
+.contract-page{
+    background: #fff;
+    color: #000;
+    padding: 20px 40px;
+}
+.contract-page h4{
+    font-weight: bold;
+}
+.contract-page p{
+    font-size: 13px;
+}
+.contract-page table{
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+.contract-page table td{
+    padding: 5px 30px;
+}
+
+.contract-page .canvas{
+    width: 300px;
+    min-height: 150px;
+    border: 1px dashed #ccc;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.contract-page canvas{
+    width: 298px;
+    height: 150px;
+}

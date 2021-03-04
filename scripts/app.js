@@ -16,7 +16,7 @@ var states = [
         { name: 'statement', state: { url: '/statement', parent: 'dashboard', templateUrl: 'views/dashboard/statement.html', data: {text: "Statement", visible: true } } },
         { name: 'paysavings', state: { url: '/paysavings', parent: 'dashboard', templateUrl: 'views/dashboard/paysavings.html', data: {text: "Add Amount", visible: true } } },
         { name: 'expense', state: { url: '/expense', parent: 'dashboard', templateUrl: 'views/dashboard/expense.html', data: {text: "Add Expense", visible: true } } },
-        // { name: 'viewloan', state: { url: '/viewloan/:id', parent: 'dashboard', templateUrl: 'views/dashboard/viewloan.html', data: {text: "View Loan", visible: false} } },
+        { name: 'contract', state: { url: '/contract', parent: 'dashboard', templateUrl: 'views/dashboard/contract.html', data: {text: "Contract", visible: true} } },
         // { name: 'loanrequest', state: { url: '/loanrequest', parent: 'dashboard', templateUrl: 'views/dashboard/loanrequest.html', data: {text: "New Loan Request", visible: true } } },
         // { name: 'myreport', state: { url: '/myreport', parent: 'dashboard', templateUrl: 'views/dashboard/myreport.html', data: {text: "My Report", visible: true } } },
         { name: 'logout', state: { url: '/login', data: {text: "Logout", visible: false }} }

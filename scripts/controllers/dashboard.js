@@ -133,6 +133,32 @@ angular.module('yapp')
         return false;
     }
 
+    $scope.initSignature = function() {
+      $timeout(function() {
+        $scope.pageInfo.canvas = document.querySelector("canvas");
+        if ($scope.pageInfo.canvas) {
+            $scope.pageInfo.signaturePad = new SignaturePad($scope.pageInfo.canvas, {
+              backgroundColor: 'rgb(255, 255, 255)'
+            });
+        }
+      }, 500);
+    }
+
+    $scope.clearSign = function() {
+      $scope.pageInfo.signaturePad.clear();
+    };
+
+    $scope.saveSign = function() {
+      firebase.database().ref('signature/'+$scope.user.id).set($scope.pageInfo.signaturePad.toDataURL());
+    };
+
+    $scope.signature = {};
+
+    firebase.database().ref('signature/').on('value', function(s) {
+      $scope.signature = s.val();
+      $scope.$apply();
+    });
+
     $scope.addExpense = function() {
       $scope.expense.ts = new Date().getTime();
       $scope.expense.type = 'debit';
